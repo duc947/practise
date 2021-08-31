@@ -17,6 +17,8 @@ local.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+/test-output
+test-output/
 
 # PyDev specific (Python IDE for Eclipse)
 *.pydevproject
@@ -71,6 +73,7 @@ local.properties
 
 # Log file
 *.log
+*.log.*
 
 # BlueJ files
 *.ctxt
