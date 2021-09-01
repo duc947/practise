@@ -20,11 +20,11 @@ public class DriverManager {
 	private static final String COULD_NOT_START = "Can't start the driver.";
 	private static final String DRIVER_NOT_FOUND = "Can't close the driver. The driver is not found!!";
 
-	public static WebDriver driver;
+	private static WebDriver driver;
 	
-//	public static WebDriver getWebDriver() {
-//        return driver;
-//    }
+	public static WebDriver getWebDriver() {
+        return driver;
+    }
 	
 	public static void start() {
 		System.out.print("======================[STARTING DRIVER]======================");
