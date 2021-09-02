@@ -16,7 +16,7 @@ public class HomePage {
 	WebElement btn_login;
 
 	public HomePage() {
-		driver.get("https://www.pexels.com/");
+		driver.get("https://unsplash.com/");
 		btn_menu = driver.findElement(By.xpath("//*[@class='when-not-signed-in hide-when-ham-is-visible']"));
 	}
 

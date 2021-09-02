@@ -30,9 +30,11 @@ public class TestListener implements ITestListener {
 	
 	@Override
 	public void onStart(ITestContext context) {
+		DriverManager.launchGrid();
 	}
 	
 	@Override
 	public void onFinish(ITestContext context) {
+		DriverManager.stopGrid();
 	}
 }

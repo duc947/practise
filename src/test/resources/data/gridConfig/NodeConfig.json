@@ -1,0 +1,19 @@
+{
+  "capabilities":
+      [
+        {
+          "browserName": "chrome",
+          "maxInstances": "20",
+          "seleniumProtocol": "WebDriver"
+        }
+    ],	
+    "nodePolling":"5000",
+    "maxConcurrent": "5",
+    "cleanUpCycle":"2000",
+    "maxSession": "20",
+    "port": "5556",
+    "register": true,
+    "registerCycle": "10000",   
+    "hub":"http://127.0.0.1:4444"
+    
+}
