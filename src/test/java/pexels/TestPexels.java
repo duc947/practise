@@ -2,8 +2,8 @@ package pexels;
 
 import org.testng.annotations.Test;
 
-import com.pexels.homePage.HomePage;
-import com.pexels.homePage.LoginPage;
+import com.pexels.page.HomePage;
+import com.pexels.page.LoginPage;
 
 public class TestPexels {
 	

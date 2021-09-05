@@ -1,10 +1,6 @@
 package com.test.driver;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
 
 import org.openqa.grid.common.RegistrationRequest;
 import org.openqa.grid.internal.utils.SelfRegisteringRemote;
@@ -12,14 +8,11 @@ import org.openqa.grid.internal.utils.configuration.GridHubConfiguration;
 import org.openqa.grid.internal.utils.configuration.GridNodeConfiguration;
 import org.openqa.grid.shared.GridNodeServer;
 import org.openqa.grid.web.Hub;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.server.SeleniumServer;
+
+import com.test.configuration.ConfigurationManager;
 
 public class DriverManager extends RemoteWebDriver{
 
@@ -34,36 +27,21 @@ public class DriverManager extends RemoteWebDriver{
 	
 	private static Hub hub = null;
 	private static SelfRegisteringRemote node = null;
+	private static ConfigurationManager configuration;
 	private static WebDriver driver;
+	
+
 	
 	public static WebDriver getWebDriver() {
         return driver;
     }
 	
 	public static void start() {
-		System.out.print("======================[STARTING DRIVER]======================");
+		System.out.print("======================[STARTING DRIVER]====================== \n");
 		try {
 			System.setProperty(WEBDRIVER_CHROME_DRIVER, WEBDRIVER_CHROME_DRIVER_Value);
-			DesiredCapabilities capabilities = new DesiredCapabilities("chrome", "", Platform.ANY);
-			ChromeOptions options = new ChromeOptions();
-			capabilities.setCapability("chrome.switches", Arrays.asList("--ignore-ssl-errors=yes"));
-			options.addArguments("--start-maximized");
-			options.addArguments("--ignore-certificate-errors");
-			options.addArguments("--allow-insecure-localhost=yes");
-			options.addArguments("--ignore-urlfetcher-cert-requests=yes");
-			options.addArguments("disable-infobars");
-			options.addArguments("--test-type");
-			Map<String, Object> prefs = new HashMap<String, Object>();
-			prefs.put("profile.default_content_setting_values.notifications", 2);
-			prefs.put("credentials_enable_service", false);
-			options.setExperimentalOption("prefs", prefs);
-			capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-
-			LoggingPreferences logPrefs = new LoggingPreferences();
-			logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-			capabilities.setCapability("goog:loggingPrefs", logPrefs);
 			
-			driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+			driver = new RemoteWebDriver(new URL(configuration.getHubUrl()), configuration.getCapabilities());
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -85,7 +63,7 @@ public class DriverManager extends RemoteWebDriver{
 	
 	
 	public static void launchGrid() {
-		System.out.print("======================[STARTING GRID]======================");
+		System.out.print("======================[STARTING GRID]====================== \n");
 		try {
 			hub = new Hub(GridHubConfiguration.loadFromJSON(HUB_CONFIG_JSON));
 			hub.start();
@@ -108,5 +86,13 @@ public class DriverManager extends RemoteWebDriver{
 		System.out.print("======================[STOP GRID]======================");
 		node.deleteAllBrowsers();
 		node.stopRemoteServer();
+	}
+	
+	public static ConfigurationManager getConfiguration() {
+		return configuration;
+	}
+
+	public static void setConfiguration(ConfigurationManager configuration) {
+		DriverManager.configuration = configuration;
 	}
 }

@@ -6,6 +6,10 @@
 		<listener class-name="com.test.listener.TestListener"></listener>
 
 	</listeners>
+	
+	<parameter name="configfile"
+		value="./data/config/Chrome-local-config.json" />
+		
 	<test name="Test">
 		<classes>
 			<class name="pexels.TestPexels" />

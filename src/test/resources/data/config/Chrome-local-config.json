@@ -1,0 +1,7 @@
+{
+	"localExecution": true,
+	"hubUrl": "http://localhost:4444/wd/hub",
+	"browserName": "chrome",
+	"version": null,
+	"platform": "ANY"
+}
