@@ -17,13 +17,13 @@ public class HomePage {
 
 	public HomePage() {
 		driver.get("https://unsplash.com/");
-		btn_menu = driver.findElement(By.xpath("//*[@class='when-not-signed-in hide-when-ham-is-visible']"));
+//		btn_menu = driver.findElement(By.xpath("//*[@class='when-not-signed-in hide-when-ham-is-visible']"));
 	}
 
 	public HomePage openPage() {
 //		driver.navigate().refresh();
 		String title = driver.getTitle();
-		Assert.assertTrue(title.contains("Free Stock Photos · Pexels"));
+		Assert.assertTrue(title.contains("Beautiful Free Images & Pictures | Unsplash"));
 		return this;
 	}
 

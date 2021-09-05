@@ -40,7 +40,9 @@ public class DriverManager extends RemoteWebDriver{
 		System.out.print("======================[STARTING DRIVER]====================== \n");
 		try {
 			System.setProperty(WEBDRIVER_CHROME_DRIVER, WEBDRIVER_CHROME_DRIVER_Value);
+			Thread.sleep(2000);
 			
+//			driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), configuration.getCapabilities());
 			driver = new RemoteWebDriver(new URL(configuration.getHubUrl()), configuration.getCapabilities());
 			
 		} catch (Exception e) {

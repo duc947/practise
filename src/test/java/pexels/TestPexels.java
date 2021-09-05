@@ -12,4 +12,11 @@ public class TestPexels {
 		new HomePage().openPage().goToLogin();
 		new LoginPage().login();
 	}
+	
+
+	@Test
+	public void testDemo2() {
+		new HomePage().openPage();
+	}
+	
 }
