@@ -12,9 +12,10 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.test.report.ExtentReport;
+
 public class ConfigurationManager {
 	
-
 	public static final String CONFIG_FILE_TESTNG_PARAM_NAME = "configfile";
 	public static final String UNKNOWN_PLATFORM = "Unknown platform : ";
 	public static final String JSON_MAPPING_ERROR = "Problem When reading the configuration file: ";
@@ -24,6 +25,7 @@ public class ConfigurationManager {
 	private String hubUrl;
 	private String version;
 	private String platform;
+	private static ExtentReport report;
 	
 
 	public void setLocalExecution(boolean localExecution) {
@@ -64,6 +66,14 @@ public class ConfigurationManager {
 
 	public void setPlatform(String platform) {
 		this.platform = platform;
+	}
+	
+	public static ExtentReport getReport() {
+		return report;
+	}
+
+	public static void setReport(ExtentReport report) {
+		ConfigurationManager.report = report;
 	}
 
 	private Platform getPlateform() {

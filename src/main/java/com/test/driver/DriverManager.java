@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.server.SeleniumServer;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.test.configuration.ConfigurationManager;
 
 public class DriverManager extends RemoteWebDriver{
@@ -29,8 +30,16 @@ public class DriverManager extends RemoteWebDriver{
 	private static SelfRegisteringRemote node = null;
 	private static ConfigurationManager configuration;
 	private static WebDriver driver;
-	
+	private static ExtentTest testReport;
 
+
+	public static ExtentTest getTestReport() {
+		return testReport;
+	}
+
+	public static void setTestReport(ExtentTest testReport) {
+		DriverManager.testReport = testReport;
+	}
 	
 	public static WebDriver getWebDriver() {
         return driver;
@@ -53,7 +62,7 @@ public class DriverManager extends RemoteWebDriver{
 	}
 	
 	public static void closeDriver() {
-		System.out.print("======================[CLOSE RUNNING DRIVER]======================");
+		System.out.print("======================[CLOSE RUNNING DRIVER]====================== \n");
 		try {
 			driver.quit();
 		} catch (Exception e) {
@@ -85,7 +94,7 @@ public class DriverManager extends RemoteWebDriver{
 	}
 	
 	public static void stopGrid() {
-		System.out.print("======================[STOP GRID]======================");
+		System.out.print("======================[STOP GRID]====================== \n");
 		node.deleteAllBrowsers();
 		node.stopRemoteServer();
 	}
@@ -97,4 +106,5 @@ public class DriverManager extends RemoteWebDriver{
 	public static void setConfiguration(ConfigurationManager configuration) {
 		DriverManager.configuration = configuration;
 	}
+	
 }

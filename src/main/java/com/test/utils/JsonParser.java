@@ -1,4 +1,4 @@
-package com.test.configuration;
+package com.test.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
