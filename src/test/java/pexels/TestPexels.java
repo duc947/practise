@@ -8,14 +8,14 @@ import com.pexels.page.LoginPage;
 public class TestPexels {
 	
 	@Test
-	public void testDemo() {
+	public void testMethodOne() {
 		new HomePage().openPage().goToLogin();
-		new LoginPage().login();
+//		new LoginPage().login();
 	}
 	
 
 	@Test
-	public void testDemo2() {
+	public void testMethodTwo() {
 		new HomePage().openPage();
 	}
 	

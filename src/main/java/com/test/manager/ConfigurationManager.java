@@ -1,4 +1,4 @@
-package com.test.configuration;
+package com.test.manager;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,8 +12,6 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import com.test.report.ExtentReport;
-
 public class ConfigurationManager {
 	
 	public static final String CONFIG_FILE_TESTNG_PARAM_NAME = "configfile";
@@ -25,7 +23,6 @@ public class ConfigurationManager {
 	private String hubUrl;
 	private String version;
 	private String platform;
-	private static ExtentReport report;
 	
 
 	public void setLocalExecution(boolean localExecution) {
@@ -67,14 +64,6 @@ public class ConfigurationManager {
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}
-	
-	public static ExtentReport getReport() {
-		return report;
-	}
-
-	public static void setReport(ExtentReport report) {
-		ConfigurationManager.report = report;
-	}
 
 	private Platform getPlateform() {
 		Platform platformAny = Platform.ANY;
@@ -95,7 +84,7 @@ public class ConfigurationManager {
 
 		ChromeOptions options = new ChromeOptions();
 		capabilities.setCapability("chrome.switches", Arrays.asList("--ignore-ssl-errors=yes"));
-		options.addArguments("--start-maximized");
+//		options.addArguments("--start-maximized");
 		options.addArguments("--ignore-certificate-errors");
 		options.addArguments("--allow-insecure-localhost=yes");
 		options.addArguments("--ignore-urlfetcher-cert-requests=yes");

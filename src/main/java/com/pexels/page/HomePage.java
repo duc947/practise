@@ -1,41 +1,47 @@
 package com.pexels.page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
-import com.test.driver.DriverManager;
+import com.aventstack.extentreports.Status;
+import com.test.driver.DriverWeb;
+import com.test.manager.DriverManager;
+import com.test.report.ExtentReport;
 
 public class HomePage {
 	
-	WebDriver driver = DriverManager.getWebDriver();
-
-	WebElement btn_menu;
-	WebElement btn_login;
+	DriverWeb driver;
+	
+	@FindBy(xpath = "//*[@data-track-label='login']")
+	private WebElement btn_login;
+	
+	@FindBy(xpath = "//*[@class='when-not-signed-in hide-when-ham-is-visible']")
+	private WebElement btn_menu;
 
 	public HomePage() {
-		driver.get("https://unsplash.com/");
-//		btn_menu = driver.findElement(By.xpath("//*[@class='when-not-signed-in hide-when-ham-is-visible']"));
+		driver = DriverManager.getDriver();
 	}
 
 	public HomePage openPage() {
-//		driver.navigate().refresh();
+		driver.get("https://liquipedia.net/");
 		String title = driver.getTitle();
-		Assert.assertTrue(title.contains("Beautiful Free Images & Pictures | Unsplash"));
+		Assert.assertTrue(title.contains(""));
+//		Assert.assertTrue(title.contains("Beautiful Free Images & Pictures | Unsplash"));
+		System.out.print(title + "\n");
+		ExtentReport.log(Status.INFO, "Page title: " + title);
 		return this;
 	}
 
 	public HomePage goToLogin() {
+		ExtentReport.log(Status.INFO, "go To Login");
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", btn_menu);
 //		btn_menu.click();
-		btn_login = driver.findElement(By.xpath("//*[@data-track-label='login']"));
 		btn_login.click();
 		return this;
 	}
-	
-	
+
 
 }

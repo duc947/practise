@@ -1,18 +1,27 @@
 package com.pexels.page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import com.test.driver.DriverManager;
+import com.test.driver.DriverWeb;
+import com.test.manager.DriverManager;
 
 public class LoginPage {
-
-	WebDriver driver = DriverManager.getWebDriver();
 	
-	WebElement input_username = driver.findElement(By.id("user_email"));
-	WebElement input_password = driver.findElement(By.id("user_password"));
-	WebElement btn_login = driver.findElement(By.cssSelector(".rd__button rd__button--jumbo rd__button--full-width"));
+	DriverWeb driver;
+
+	@FindBy(id = "user_email")
+	private WebElement input_username;
+	
+	@FindBy(id = "user_password")
+	private WebElement input_password;
+
+	@FindBy(css = ".rd__button rd__button--jumbo rd__button--full-width")
+	private WebElement btn_login;
+	
+	public LoginPage() {
+		driver = DriverManager.getDriver();
+	}
 	
 	public LoginPage login() {
 		input_username.click();

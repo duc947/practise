@@ -8,9 +8,9 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import com.aventstack.extentreports.Status;
-import com.test.configuration.ConfigurationManager;
-import com.test.driver.DriverManager;
+import com.test.manager.ConfigurationManager;
+import com.test.manager.DriverManager;
+import com.test.manager.ExecutionManager;
 import com.test.report.ExtentReport;
 import com.test.utils.JsonParser;
 
@@ -24,7 +24,7 @@ public class TestListener implements ITestListener, ISuiteListener {
 	
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		ExtentReport.logSuccessedTest();
+		ExtentReport.logTest(result);
 		try {
 			onTestEnd(result, true);
 		} catch (InterruptedException | IOException e) {
@@ -35,7 +35,7 @@ public class TestListener implements ITestListener, ISuiteListener {
 	
 	@Override
 	public void onTestFailure(ITestResult result) {
-		ExtentReport.logSuccessedTest();
+		ExtentReport.logTest(result);
 		try {
 
 			onTestEnd(result, false);
@@ -53,12 +53,12 @@ public class TestListener implements ITestListener, ISuiteListener {
 	
 	@Override
 	public void onStart(ITestContext context) {
-		DriverManager.launchGrid();
+		ExecutionManager.launchGrid();
 	}
 	
 	@Override
 	public void onFinish(ITestContext context) {
-		DriverManager.stopGrid();
+		ExecutionManager.stopGrid();
 	}
 	
 	@Override
@@ -73,8 +73,8 @@ public class TestListener implements ITestListener, ISuiteListener {
 			System.out.println(ConfigurationManager.JSON_MAPPING_ERROR + configFilePath);
 			e.printStackTrace();
 		}
-		DriverManager.setConfiguration(config);
-		ConfigurationManager.setReport(ExtentReport.createReport(suite.getName()));
+		ExecutionManager.setConfiguration(config);
+		ExecutionManager.setReport(ExtentReport.createReport(suite.getName()));
 	}
 	
 	protected void afterTest(ITestResult testResult, boolean isSuccess) {
@@ -87,7 +87,6 @@ public class TestListener implements ITestListener, ISuiteListener {
 			e.printStackTrace();
 		} finally {
 			try {
-				ExtentReport.endTestReport(testResult);
 				ExtentReport.endTest();
 			} catch (Exception e) {
 				e.printStackTrace();

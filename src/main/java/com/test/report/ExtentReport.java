@@ -13,8 +13,8 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.test.configuration.ConfigurationManager;
-import com.test.driver.DriverManager;
+import com.test.manager.DriverManager;
+import com.test.manager.ExecutionManager;
 
 public class ExtentReport extends ExtentReports {
 
@@ -26,7 +26,7 @@ public class ExtentReport extends ExtentReports {
 	public static ExtentReport createReport(String suiteName) {
 		ExtentReport report = new ExtentReport(EXTENT_REPORT_PATH + suiteName + EXTENT_REPORT_EXTENSION, true);
 		Map<String, String> configd = new HashMap<String, String>();
-		DesiredCapabilities desiredCapabilities = DriverManager.getConfiguration().getCapabilities();
+		DesiredCapabilities desiredCapabilities = ExecutionManager.getConfiguration().getCapabilities();
 		Map<String, Object> caps = (Map<String, Object>) desiredCapabilities.asMap();
 		for (String capabilityName : caps.keySet()) {
 			if (desiredCapabilities.getCapability(capabilityName) != null) {
@@ -73,13 +73,9 @@ public class ExtentReport extends ExtentReports {
 
 	public static void startTestReport(ITestResult testResult) {
 		String testDescription = testResult.getMethod().getDescription();
-		DriverManager.setTestReport(ConfigurationManager.getReport()
+		DriverManager.getDriver().setTestReport(ExecutionManager.getReport()
 				.createTestCase(testResult.getInstanceName() + "." + testResult.getName(), testDescription));
 
-	}
-
-	public static void endTestReport(ITestResult testResult) {
-		DriverManager.getTestReport().assignCategory(testResult.getMethod().getGroups());
 	}
 
 	public synchronized ExtentTest createTestCase(String name, String description) {
@@ -91,9 +87,9 @@ public class ExtentReport extends ExtentReports {
 	}
 
 	public static void endTest() {
-		if (ConfigurationManager.getReport() != null) {
+		if (ExecutionManager.getReport() != null) {
 			try {
-				ConfigurationManager.getReport().flush();
+				ExecutionManager.getReport().flush();
 			} catch (Exception e) {
 				System.out.println(CLOSING_REPORT_ERROR);
 				e.printStackTrace();
@@ -102,29 +98,26 @@ public class ExtentReport extends ExtentReports {
 	}
 
 	public static void log(Status logStatus, String step) {
-		if (DriverManager.getWebDriver() == null) {
+		if (DriverManager.getDriver() == null) {
 			return;
 		}
-		if (DriverManager.getTestReport() != null) {
-			DriverManager.getTestReport().log(logStatus, step);
+		if (DriverManager.getDriver().getTestReport() != null) {
+			DriverManager.getDriver().getTestReport().log(logStatus, step);
 		}
 	}
 	
-
-
-	public static void logSuccessedTest() {
-		Status a = DriverManager.getTestReport().getStatus();
-		switch (DriverManager.getTestReport().getStatus()) {
-		case FAIL:
-			DriverManager.getTestReport().log(Status.FAIL, " test ends  with error!");
+	public static void logTest(ITestResult result) {
+		switch (result.getStatus()) {
+		case 2:
+			DriverManager.getDriver().getTestReport().log(Status.FAIL, " test ends  with error! ", result.getThrowable(), null);
 			break;
-		case WARNING:
-			DriverManager.getTestReport().log(Status.PASS,
-					" test ends with success and have one or many warnings!");
+		case 1:
+			DriverManager.getDriver().getTestReport().log(Status.PASS, " test ends with success!");
 			break;
 		default:
-			DriverManager.getTestReport().log(Status.PASS, " test ends with success!");
+			DriverManager.getDriver().getTestReport().log(Status.PASS, " test ends with success!");
 			break;
 		}
 	}
+
 }
