@@ -13,7 +13,7 @@
 
 	<test name="Test">
 		<classes>
-			<class name="pexels.TestPexels" />
+			<class name="demo.TestDemo" />
 		</classes>
 	</test>
 </suite>
