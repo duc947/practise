@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.test.utils.JsonParser;
 
-public class DataMapper extends JsonParser<DataMapper>  {
+public class DataMapper{
 	
 	public static final String MAL_FORMED_FILE_ERROR = "File not found or malformed : ";
 	public static final String MAPPED_KEY_NOTFOUND_EXCEPTION = "Data not found in the mapped data with the given key: ";

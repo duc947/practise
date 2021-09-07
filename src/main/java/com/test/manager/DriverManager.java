@@ -63,7 +63,7 @@ public class DriverManager {
 	public static void intitializeTestInfo(String dataFilePath) {
 		DataMapper dataMapper = new DataMapper();
 		if (dataFilePath != null) {
-			System.out.print("======================[MAPPED DATA] : " + dataFilePath + "====================== \n");
+			System.out.print("======================[MAPPED DATA] : " + dataFilePath + " ====================== \n");
 			dataMapper.initMapper(dataFilePath);
 		}
 		DriverManager.getDriver().setDataMapper(dataMapper);
