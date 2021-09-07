@@ -101,6 +101,7 @@ public class ExtentReport extends ExtentReports {
 		}
 		if (DriverManager.getDriver().getTestReport() != null) {
 			DriverManager.getDriver().getTestReport().log(logStatus, step);
+			System.out.print(step + "\n");
 		}
 	}
 	

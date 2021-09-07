@@ -84,7 +84,7 @@ public class ConfigurationManager {
 
 		ChromeOptions options = new ChromeOptions();
 		capabilities.setCapability("chrome.switches", Arrays.asList("--ignore-ssl-errors=yes"));
-//		options.addArguments("--start-maximized");
+		options.addArguments("--start-maximized");
 		options.addArguments("--ignore-certificate-errors");
 		options.addArguments("--allow-insecure-localhost=yes");
 		options.addArguments("--ignore-urlfetcher-cert-requests=yes");
