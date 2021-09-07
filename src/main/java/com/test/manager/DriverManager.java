@@ -2,6 +2,7 @@ package com.test.manager;
 
 import java.net.URL;
 
+import com.test.data.DataMapper;
 import com.test.driver.DriverWeb;
 
 public class DriverManager {
@@ -57,6 +58,15 @@ public class DriverManager {
 			System.out.print(DRIVER_NOT_FOUND);
 		}
 		return sessionDriver.get();
+	}
+
+	public static void intitializeTestInfo(String dataFilePath) {
+		DataMapper dataMapper = new DataMapper();
+		if (dataFilePath != null) {
+			System.out.print("======================[MAPPED DATA] : " + dataFilePath + "====================== \n");
+			dataMapper.initMapper(dataFilePath);
+		}
+		DriverManager.getDriver().setDataMapper(dataMapper);
 	}
 	
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 
-import com.aventstack.extentreports.AnalysisStrategy;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -66,7 +65,6 @@ public class ExtentReport extends ExtentReports {
 		htmlReporter.config().setEncoding("utf-8");
 		htmlReporter.config().setReportName(fileName);
 
-		this.setAnalysisStrategy(AnalysisStrategy.TEST);
 		this.attachReporter(htmlReporter);
 		return this;
 	}
@@ -109,7 +107,8 @@ public class ExtentReport extends ExtentReports {
 	public static void logTest(ITestResult result) {
 		switch (result.getStatus()) {
 		case 2:
-			DriverManager.getDriver().getTestReport().log(Status.FAIL, " test ends  with error! ", result.getThrowable(), null);
+			DriverManager.getDriver().getTestReport().log(Status.FAIL, " test ends  with error! ");
+			DriverManager.getDriver().getTestReport().log(Status.FAIL, null , result.getThrowable(), null);
 			break;
 		case 1:
 			DriverManager.getDriver().getTestReport().log(Status.PASS, " test ends with success!");

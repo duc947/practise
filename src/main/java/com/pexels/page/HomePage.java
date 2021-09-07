@@ -31,6 +31,7 @@ public class HomePage {
 //		Assert.assertTrue(title.contains("Beautiful Free Images & Pictures | Unsplash"));
 		System.out.print(title + "\n");
 		ExtentReport.log(Status.INFO, "Page title: " + title);
+		ExtentReport.log(Status.INFO, driver.getDataMapper().mapData("email"));
 		return this;
 	}
 

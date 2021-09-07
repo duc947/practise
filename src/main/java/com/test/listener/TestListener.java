@@ -1,13 +1,17 @@
 package com.test.listener;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
+import org.testng.internal.ConstructorOrMethod;
 
+import com.test.data.InjectData;
 import com.test.manager.ConfigurationManager;
 import com.test.manager.DriverManager;
 import com.test.manager.ExecutionManager;
@@ -18,8 +22,10 @@ public class TestListener implements ITestListener, ISuiteListener {
 	
 	@Override
 	public void onTestStart(ITestResult result) {
+		ITestNGMethod method = result.getMethod();
 		DriverManager.start();
 		ExtentReport.startTestReport(result);
+		DriverManager.intitializeTestInfo(getDataMapperPath(method));
 	}
 	
 	@Override
@@ -77,23 +83,34 @@ public class TestListener implements ITestListener, ISuiteListener {
 		ExecutionManager.setReport(ExtentReport.createReport(suite.getName()));
 	}
 	
-	protected void afterTest(ITestResult testResult, boolean isSuccess) {
-	}
 	
 	private void onTestEnd(ITestResult testResult, boolean isSuccess) throws InterruptedException, IOException {
 		try {
-			afterTest(testResult, isSuccess);
+			ExtentReport.endTest();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				ExtentReport.endTest();
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				DriverManager.closeDriver();
-			}
+			DriverManager.closeDriver();
 		}
+	}
 
+	private String getDataMapperPath(ITestNGMethod method) {
+		Method m = getMethod(method);
+		if (m == null || m.getAnnotation(InjectData.class) == null) {
+			return null;
+		}
+		String jsonFile = m.getAnnotation(InjectData.class).json();
+		return jsonFile;
+	}
+	
+	private Method getMethod(ITestNGMethod method) {
+		if (!method.isTest()) {
+			return null;
+		}
+		ConstructorOrMethod com = method.getConstructorOrMethod();
+		if (com.getMethod() == null) {
+			return null;
+		}
+		return com.getMethod();
 	}
 }
