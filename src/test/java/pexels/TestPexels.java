@@ -14,8 +14,8 @@ public class TestPexels {
 		new HomePage().openPage().goToLogin();
 //		new LoginPage().login();
 	}
-	
-//
+
+//	@InjectData(json = "")
 //	@Test
 //	public void testMethodTwo() {
 //		new HomePage().openPage();

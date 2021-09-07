@@ -13,8 +13,8 @@ import com.test.report.ExtentReport;
 public class ExecutionManager {
 	
 	private static final String STARTING_GRID_ERROR = "Problem when strating  grid !!! \n";
-	private static final String HUB_CONFIG_JSON =  System.getProperty("user.dir") + "/src/test/resources/data/gridConfig/HubConfig.json";
-	private static final String NODE_CONFIG_JSON =  System.getProperty("user.dir") + "/src/test/resources/data/gridConfig/NodeConfig.json";
+	private static final String HUB_CONFIG_JSON =  System.getProperty("user.dir") + "/src/test/resources/common/grid/gridConfig/HubConfig.json";
+	private static final String NODE_CONFIG_JSON =  System.getProperty("user.dir") + "/src/test/resources/common/grid/gridConfig/NodeConfig.json";
 
 	private static Hub hub = null;
 	private static SelfRegisteringRemote node = null;

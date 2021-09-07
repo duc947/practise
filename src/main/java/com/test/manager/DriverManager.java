@@ -8,7 +8,7 @@ import com.test.driver.DriverWeb;
 public class DriverManager {
 
 	private static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
-	private static final String WEBDRIVER_CHROME_DRIVER_Value = System.getProperty("user.dir") + "/src/test/resources/data/driver/chromedriver.exe";
+	private static final String WEBDRIVER_CHROME_DRIVER_Value = System.getProperty("user.dir") + "/src/test/resources/common/grid/driver/chromedriver.exe";
 	private static final String COULD_NOT_START = "Can't start the driver. \n";
 	private static final String CLOSE_DRIVER_ERROR = "Can't close the driver!! \n";
 	private static final String DRIVER_NOT_FOUND = "Driver is not instantiated yet, there is a problem some where \n";

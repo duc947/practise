@@ -9,7 +9,7 @@
 	</listeners>
 
 	<parameter name="configfile"
-		value="./data/config/Chrome-local-config.json" />
+		value="./common/config/Chrome-local-config.json" />
 
 	<test name="Test">
 		<classes>
