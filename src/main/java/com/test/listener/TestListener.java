@@ -31,24 +31,13 @@ public class TestListener implements ITestListener, ISuiteListener {
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		ExtentReport.logTest(result);
-		try {
-			onTestEnd(result, true);
-		} catch (InterruptedException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		onTestEnd();
 	}
 	
 	@Override
 	public void onTestFailure(ITestResult result) {
 		ExtentReport.logTest(result);
-		try {
-
-			onTestEnd(result, false);
-		} catch (InterruptedException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		onTestEnd();
 
 	}
 	
@@ -84,7 +73,7 @@ public class TestListener implements ITestListener, ISuiteListener {
 	}
 	
 	
-	private void onTestEnd(ITestResult testResult, boolean isSuccess) throws InterruptedException, IOException {
+	private void onTestEnd() {
 		try {
 			ExtentReport.endTest();
 		} catch (Exception e) {

@@ -33,9 +33,9 @@ public class HomePage extends TestPage {
 		return this;
 	}
 
-	public HomePage goToLogin() {
+	public HomePage goToLoginPage() {
 		btn_login.click();
-		ExtentReport.log(Status.INFO, "go To Login");
+		ExtentReport.log(Status.INFO, "Go to Login page");
 		return this;
 	}
 
@@ -51,7 +51,7 @@ public class HomePage extends TestPage {
 		return this;
 	}
 
-	public HomePage likeSelectedImage() {
+	public HomePage unlikeSelectedImageIfNeeded() {
 		String btn_likeBackground = btn_likeSelectedImage.getCssValue("background-color");
 		if (btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_SELECTED)
 				|| btn_likeBackground.contains(LIKE_BUTTON_SELECTED_BACKGROUND_COLOR)) {
@@ -61,7 +61,11 @@ public class HomePage extends TestPage {
 							|| !btn_likeBackground.contains(LIKE_BUTTON_SELECTED_BACKGROUND_COLOR),
 					"Like button unselect unsuccessfully");
 		}
-		impliWait(3);
+		ExtentReport.log(Status.INFO, "Unike selected image If needed");
+		return this;
+	}
+
+	public HomePage likeSelectedImage() {
 		btn_likeSelectedImage.click();
 		ExtentReport.log(Status.INFO, "Like selected image");
 		return this;
