@@ -35,6 +35,28 @@ public class ProfilePage extends TestPage {
 		})
 	private List<WebElement> btn_likePhoto;
 
+	@FindBy(css = "[data-test='user-nav-link-collections']")
+	private WebElement btn_collectionTab;
+
+	@FindBys({ 
+		@FindBy(xpath = "//*[contains(@href,'/collections/')]/div[2]/div"),
+		})
+	private List<WebElement> lbl_collectionName;
+
+	@FindBy(xpath = "//*[contains(@data-test,'page-header-title')]/..//button")
+	private WebElement btn_editCollection;
+
+	@FindBy(xpath = "//form[@method = 'post']//button[text()='Delete Collection']")
+	private WebElement btn_deleteCollection;
+
+	@FindBy(xpath = "//form[@method = 'post']//button[text()='Delete']")
+	private WebElement btn_deleteCollectionConfirm;
+
+	@FindBys({ 
+		@FindBy(xpath = "//figure/div/div/a/div/div[2]/div/img"),
+		})
+	private List<WebElement> img_collectionImage;
+	
 	public ProfilePage goToEditProfilePage() {
 		lnk_editProfile.click();
 		ExtentReport.log(Status.INFO, "Go to Edit Profile page");
@@ -83,4 +105,85 @@ public class ProfilePage extends TestPage {
 		ExtentReport.log(Status.INFO, "Unlike Liked photo: " + (ordinal + 1));
 		return this;
 	}
+
+	public ProfilePage goToCollectionTab() {
+		btn_collectionTab.click();
+		ExtentReport.log(Status.INFO, "Go to Collection tab");
+		return this;
+	}
+
+	public ProfilePage openSpecificCollection() {
+		boolean isHave = false;
+		for (int i = 0; i < lbl_collectionName.size(); i++) {
+			if (lbl_collectionName.get(i).getText().contains(getData("collectionName"))) {
+				lbl_collectionName.get(i).click();
+				ExtentReport.log(Status.INFO, "Open Collection: " + getData("collectionName"));
+				isHave = true;
+				break;
+			}
+		}
+		if (!isHave) {
+			ExtentReport.log(Status.INFO, "Do not have any Collection: " + getData("collectionName"));
+		}
+		return this;
+	}
+
+	public ProfilePage editOpenedCollection() {
+		btn_editCollection.click();
+		ExtentReport.log(Status.INFO, "Edit opened Collection");
+		return this;
+	}
+
+	public ProfilePage deleteOpenedCollection() {
+		btn_deleteCollection.click();
+		btn_deleteCollectionConfirm.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ExtentReport.log(Status.INFO, "Delete opened Collection");
+		return this;
+	}
+
+	public ProfilePage deleteSpecificCollection() {
+		for (int j = 0; j < lbl_collectionName.size(); j++) {
+			if (lbl_collectionName.get(j).getText().contains(getData("collectionName"))) {
+				openSpecificCollection();
+				editOpenedCollection();
+				deleteOpenedCollection();
+				break;
+			}
+		}
+		return this;
+	}
+
+	public ProfilePage clearAllSpecificCollectionIfNeeded() {
+		int numberOfSpecificCollection = getNumberOfCollection();
+		for (int i = 0; i < numberOfSpecificCollection; i++) {
+			deleteSpecificCollection();
+		}
+		return this;
+	}
+
+	public int getNumberOfCollection() {
+		int result = 0;
+		for (int i = 0; i < lbl_collectionName.size(); i++) {
+			if (lbl_collectionName.get(i).getText().contains(getData("collectionName"))) {
+				result++;
+			}
+		}
+		return result;
+	}
+
+	public ProfilePage verifyNumberOfImg() {
+		int actual = img_collectionImage.size();
+		int expected = Integer.valueOf(getData("numberOfCollectionImg"));
+		Assert.assertEquals(actual, expected, "Number of photo in Collection is wrong: " + actual);
+		ExtentReport.log(Status.INFO, "Number of photo in Collection: " + actual);
+		return this;
+	}
+	
+	
 }

@@ -27,11 +27,38 @@ public class HomePage extends TestPage {
 	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]//button[@title='Like photo']")
 	private WebElement btn_likeSelectedImage;
 
-	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]//button")
+	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]/div/button")
 	private WebElement btn_closeSelectedImage;
+	
+	@FindBy(xpath = "(//*[contains(@class,'ReactModal__Content--after-open')]/div/button)[2]")
+	private WebElement btn_closeCollection;
+
+	@FindBy(css = ".ReactModal__Content--after-open button[title='Add to collection']")
+	private WebElement btn_addToCollection;
+
+	@FindBy(xpath = "/html/body/div[5]/div/div/div[2]/div/div[3]/div[1]/div/button")
+	private WebElement btn_createNewCollection;
+
+	@FindBy(css = "input[name='title']")
+	private WebElement input_collectionName;
+
+	@FindBy(css = "input[type='checkbox']")
+	private WebElement chkbox_makePrivateCollection;
+
+	@FindBy(xpath = "//*[contains(text(),'Create collection')]")
+	private WebElement btn_submitCreateCollection;
 
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_SELECTED = "rgba(224, 76, 76, 1)";
 	public static final String LIKE_BUTTON_SELECTED_BACKGROUND_COLOR = "rgba(241, 81, 81, 1)";
+	
+
+	public HomePage() {
+		this(false);
+	}
+	
+	public HomePage(boolean waitPageLoad) {
+		waitUntilReadyState(10);
+	}
 
 	public HomePage openPage() {
 		openURL(getData("URL"));
@@ -54,6 +81,7 @@ public class HomePage extends TestPage {
 	}
 
 	public HomePage selectImage(WebElement image) {
+		waitElementToBeClickable(image);
 		image.click();
 		ExtentReport.log(Status.INFO, "Select an image");
 		return this;
@@ -120,6 +148,64 @@ public class HomePage extends TestPage {
 		String URL = getData("URL") + getData("accountName") + "/likes";
 		openURL(URL);
 		ExtentReport.log(Status.INFO, "Go to Like tab: " + getURL());
+		return this;
+	}
+
+	public HomePage addToCollection() {
+		waitElementVisibility(btn_addToCollection);
+		waitElementToBeClickable(btn_addToCollection);
+		btn_addToCollection.click();
+		ExtentReport.log(Status.INFO, "Click AddToCollection button");
+		return this;
+	}
+
+	public HomePage addToSpecificCollection(String collectionName) {
+		WebElement lbl_collectionName = getElementByXPATH("//h4[text()='" + collectionName + "']");
+		lbl_collectionName.click();
+		ExtentReport.log(Status.INFO, "Click AddToCollection button");
+		return this;
+	}
+
+	public HomePage createPrivateCollection() {
+		selectFirstImage();
+		addToCollection();
+		waitElementToBeClickable(btn_createNewCollection);
+		btn_createNewCollection.click();
+		input_collectionName.sendKeys(getData("collectionName"));
+		chkbox_makePrivateCollection.click();
+		btn_submitCreateCollection.click();
+		btn_closeCollection.click();
+		btn_closeSelectedImage.click();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;
+	}
+	
+	/* Add another image to collection after add 1st image on homepage */
+	public HomePage addThenRemoveAnotherImgToCollection() {
+		int imgNumber = img_itemList.size();
+		Set<Integer> imgNumberPicked = getRandomNumberFromRange(1, imgNumber, 1);
+		for (int element : imgNumberPicked) {
+			selectImage(img_itemList.get(element));
+			addToCollection();
+			addToSpecificCollection(getData("collectionName"));
+			btn_closeCollection.click();
+			addToCollection();
+			addToSpecificCollection(getData("collectionName"));
+			btn_closeCollection.click();
+			closeSelectedImage();
+		}
+		return this;
+	}
+
+	public HomePage goToCollectionTab() {
+		String URL = getData("URL") + getData("accountName") + "/collections";
+		openURL(URL);
+		ExtentReport.log(Status.INFO, "Go to Collection tab: " + getURL());
 		return this;
 	}
 }

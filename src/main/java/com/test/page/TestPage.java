@@ -2,6 +2,7 @@ package com.test.page;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -54,5 +55,17 @@ public class TestPage {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click();", element);
     }
+    
+    public WebElement getElementByXPATH(String key) {
+    	return driver.findElement(By.xpath(key));
+    }
+	
+	public void waitUntilReadyState(int timeCount) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		do {
+			timeCount--;
+			impliWait(1);
+		} while (!js.executeScript("return document.readyState").equals("complete") && timeCount > 0);
+	}
     
 }

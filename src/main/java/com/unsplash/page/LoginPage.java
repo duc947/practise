@@ -17,6 +17,14 @@ public class LoginPage extends TestPage {
 
 	@FindBy(css = "[name='commit']")
 	private WebElement btn_login;
+	
+	public LoginPage() {
+		this(false);
+	}
+
+	public LoginPage(boolean waitPageLoad) {
+		waitUntilReadyState(10);
+	}
 
 	public LoginPage login() {
 		String user = getData("email");

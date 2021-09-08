@@ -12,7 +12,7 @@ import com.unsplash.page.TopHearder;
 public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -21,7 +21,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testTwo() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -41,5 +41,16 @@ public class TestUnsplash {
 		new LoginPage().login();
 		new HomePage().selectAndLikeRandomImage().goToLikeTab();
 		new ProfilePage().verifyNumberLiked().verifyNumberLikedImage().unlikeAllLikedImg();
+	}
+
+	@InjectData(json = "./dataTest/unsplash/testOne.json")
+	@Test(enabled = true)
+	public void testFour() {
+		new HomePage().openPage().goToLoginPage();
+		new LoginPage(true).login();
+		new HomePage(true).createPrivateCollection().addThenRemoveAnotherImgToCollection().goToCollectionTab();
+		new ProfilePage().openSpecificCollection().verifyNumberOfImg();
+		new TopHearder().openPersonalMenu().goToProfilePage();
+		new ProfilePage().goToCollectionTab().clearAllSpecificCollectionIfNeeded();
 	}
 }

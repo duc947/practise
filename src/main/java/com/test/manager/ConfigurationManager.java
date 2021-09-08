@@ -84,12 +84,12 @@ public class ConfigurationManager {
 
 		ChromeOptions options = new ChromeOptions();
 		capabilities.setCapability("chrome.switches", Arrays.asList("--ignore-ssl-errors=yes"));
+		options.addArguments("--disable-extensions");
 		options.addArguments("--start-maximized");
 		options.addArguments("--ignore-certificate-errors");
 		options.addArguments("--allow-insecure-localhost=yes");
 		options.addArguments("--ignore-urlfetcher-cert-requests=yes");
 		options.addArguments("disable-infobars");
-		options.addArguments("--test-type");
 		Map<String, Object> prefs = new HashMap<String, Object>();
 		prefs.put("profile.default_content_setting_values.notifications", 2);
 		prefs.put("credentials_enable_service", false);
