@@ -2,6 +2,7 @@ package com.test.page;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,6 +29,10 @@ public class TestPage {
     public String getTitle() {
     	return driver.getTitle();
     }
+    
+    public String getURL() {
+    	return driver.getCurrentUrl();
+    }
 
     public String getData(String key) {
     	return driver.getDataMapper().mapData(key);
@@ -43,6 +48,11 @@ public class TestPage {
     
     public WebElement waitElementToBeClickable(WebElement element) {
         return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+    
+    public void clickByJS(WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", element);
     }
     
 }

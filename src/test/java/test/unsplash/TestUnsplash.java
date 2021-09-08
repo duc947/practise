@@ -12,16 +12,16 @@ import com.unsplash.page.TopHearder;
 public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
 		new HomePage().selectFirstImage().unlikeSelectedImageIfNeeded().likeSelectedImage()
-				.verifySelectedImageIsLiked();
+				.verifySelectedImageIsLiked().unlikeSelectedImageIfNeeded();
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test
+	@Test(enabled = false)
 	public void testTwo() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -32,5 +32,14 @@ public class TestUnsplash {
 		new ProfilePage().verifyEditedLocation().verifyEditedBio();
 		new ProfilePage().goToEditProfilePage();
 		new EditProfilePage().rollbackData().submitUpdate();
+	}
+
+	@InjectData(json = "./dataTest/unsplash/testOne.json")
+	@Test(enabled = true)
+	public void testThree() {
+		new HomePage().openPage().goToLoginPage();
+		new LoginPage().login();
+		new HomePage().selectAndLikeRandomImage().goToLikeTab();
+		new ProfilePage().verifyNumberLiked().verifyNumberLikedImage().unlikeAllLikedImg();
 	}
 }

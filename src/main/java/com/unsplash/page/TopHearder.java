@@ -8,11 +8,11 @@ import com.test.page.TestPage;
 import com.test.report.ExtentReport;
 
 public class TopHearder extends TestPage {
-
+	
 	@FindBy(xpath = "//*[@id='popover-avatar-loggedin-menu-desktop']//button[@role='button'] | //*[contains(@class,'dropdown')]/a")
 	private WebElement btn_personalMenu;
 
-	@FindBy(xpath = "//*[@href='/@" + "duc5553333" + "']")
+	@FindBy(xpath = "//*[@href='/" + "@duc5553333" + "']")
 	private WebElement lnk_profile;
 
 	public TopHearder openPersonalMenu() {
