@@ -12,12 +12,12 @@
 	<test name="Test" preserve-order="true">
 		<classes>
 			<class name="test.unsplash.TestUnsplash">
-				<methods>
-					<include name="testScenarioTwo"></include>
+				<methods><!-- 
+					<include name="testScenarioTwo"></include> -->
 					<include name="testScenarioOne"></include>
-					<include name="testScenarioThree"></include>
+					<!-- <include name="testScenarioThree"></include>
 					<include name="testScenarioFour"></include>
-					<include name="testScenarioFive"></include>
+					<include name="testScenarioFive"></include> -->
 				</methods>
 			</class>
 		</classes>

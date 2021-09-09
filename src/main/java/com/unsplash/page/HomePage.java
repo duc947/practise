@@ -22,7 +22,7 @@ public class HomePage extends TestPage {
 	@FindBys({ @FindBy(css = "[itemprop=image]"), })
 	private List<WebElement> img_itemList;
 
-	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]//button[@title='Like photo']")
+	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]//button[@title='Like photo']/*")
 	private WebElement btn_likeSelectedImage;
 
 	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]/div/button")
@@ -49,6 +49,10 @@ public class HomePage extends TestPage {
 	@FindBy(css = "div[data-test='photos-route'] a[title='Download photo']")
 	private WebElement btn_downloadImage;
 
+	@FindBy(css = "[title='Choose your download size']")
+	private WebElement btn_chooseDownloadSizeImage;
+
+	public static final String LIKED_BUTTON_COLOR = "rgba(17, 17, 17, 1)";
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_1 = "rgba(224, 76, 76, 1)";
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_2 = "rgba(241, 81, 81, 1)";
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_3 = "rgba(226, 86, 86, 1)";
@@ -95,16 +99,10 @@ public class HomePage extends TestPage {
 	}
 
 	public HomePage unlikeSelectedImageIfNeeded() {
-		String btn_likeBackground = btn_likeSelectedImage.getCssValue("background-color");
-		if (btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
-				|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
-				|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3)) {
+		if (btn_likeSelectedImage.getCssValue("color").contains(LIKED_BUTTON_COLOR)) {
 			btn_likeSelectedImage.click();
-			Assert.assertTrue(
-					!btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
-							|| !btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
-							|| !btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3),
-					"Like button unselect unsuccessfully");
+			btn_chooseDownloadSizeImage.click();
+			Assert.assertTrue(!btn_likeSelectedImage.getCssValue("color").contains(LIKED_BUTTON_COLOR), "Like button unselect unsuccessfully");
 		}
 		ExtentReport.log(Status.INFO, "Unike selected image If needed");
 		return this;
@@ -123,11 +121,8 @@ public class HomePage extends TestPage {
 	}
 
 	public HomePage verifySelectedImageIsLiked() {
-		String btn_likeBackground = btn_likeSelectedImage.getCssValue("background-color");
-		Assert.assertTrue(
-				btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
-						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
-						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3),
+		String btn_likeBackground = btn_likeSelectedImage.getCssValue("color");
+		Assert.assertTrue(btn_likeBackground.contains(LIKED_BUTTON_COLOR),
 				"Like button is not selected" + btn_likeBackground);
 		ExtentReport.log(Status.INFO, "Like button background is change:" + btn_likeBackground);
 		return this;
