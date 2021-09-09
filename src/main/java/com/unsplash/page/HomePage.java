@@ -19,9 +19,7 @@ public class HomePage extends TestPage {
 	@FindBy(css = "[href='/login']")
 	private WebElement btn_login;
 
-	@FindBys({ 
-		@FindBy(css = "[itemprop=image]"), 
-		})
+	@FindBys({ @FindBy(css = "[itemprop=image]"), })
 	private List<WebElement> img_itemList;
 
 	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]//button[@title='Like photo']")
@@ -29,7 +27,7 @@ public class HomePage extends TestPage {
 
 	@FindBy(xpath = "//*[contains(@class,'ReactModal__Content--after-open')]/div/button")
 	private WebElement btn_closeSelectedImage;
-	
+
 	@FindBy(xpath = "(//*[contains(@class,'ReactModal__Content--after-open')]/div/button)[2]")
 	private WebElement btn_closeCollection;
 
@@ -48,14 +46,14 @@ public class HomePage extends TestPage {
 	@FindBy(xpath = "//*[contains(text(),'Create collection')]")
 	private WebElement btn_submitCreateCollection;
 
-	public static final String LIKE_BUTTON_BACKGROUND_COLOR_SELECTED = "rgba(224, 76, 76, 1)";
-	public static final String LIKE_BUTTON_SELECTED_BACKGROUND_COLOR = "rgba(241, 81, 81, 1)";
-	
+	public static final String LIKE_BUTTON_BACKGROUND_COLOR_1 = "rgba(224, 76, 76, 1)";
+	public static final String LIKE_BUTTON_BACKGROUND_COLOR_2 = "rgba(241, 81, 81, 1)";
+	public static final String LIKE_BUTTON_BACKGROUND_COLOR_3 = "rgba(226, 86, 86, 1)";
 
 	public HomePage() {
 		this(false);
 	}
-	
+
 	public HomePage(boolean waitPageLoad) {
 		waitUntilReadyState(10);
 	}
@@ -89,12 +87,14 @@ public class HomePage extends TestPage {
 
 	public HomePage unlikeSelectedImageIfNeeded() {
 		String btn_likeBackground = btn_likeSelectedImage.getCssValue("background-color");
-		if (btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_SELECTED)
-				|| btn_likeBackground.contains(LIKE_BUTTON_SELECTED_BACKGROUND_COLOR)) {
+		if (btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
+				|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
+				|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3)) {
 			btn_likeSelectedImage.click();
 			Assert.assertTrue(
-					!btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_SELECTED)
-							|| !btn_likeBackground.contains(LIKE_BUTTON_SELECTED_BACKGROUND_COLOR),
+					!btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
+							|| !btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
+							|| !btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3),
 					"Like button unselect unsuccessfully");
 		}
 		ExtentReport.log(Status.INFO, "Unike selected image If needed");
@@ -115,15 +115,19 @@ public class HomePage extends TestPage {
 
 	public HomePage verifySelectedImageIsLiked() {
 		String btn_likeBackground = btn_likeSelectedImage.getCssValue("background-color");
-		Assert.assertTrue(btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_SELECTED),
-				"Like button is not selected");
-		ExtentReport.log(Status.INFO, "Like button background is change");
+		Assert.assertTrue(
+				btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_1)
+						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
+						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3),
+				"Like button is not selected" + btn_likeBackground);
+		ExtentReport.log(Status.INFO, "Like button background is change:"  + btn_likeBackground);
 		return this;
 	}
 
 	public HomePage selectAndLikeRandomImage() {
 		int imgNumber = img_itemList.size();
 		int quantity = Integer.valueOf(getData("numberOfLikedImg"));
+		ExtentReport.log(Status.INFO, "Select: " + quantity  + " image from " + imgNumber);
 		Set<Integer> imgNumberPicked = getRandomNumberFromRange(0, imgNumber, quantity);
 		for (int element : imgNumberPicked) {
 			selectImage(img_itemList.get(element));
@@ -184,7 +188,7 @@ public class HomePage extends TestPage {
 		}
 		return this;
 	}
-	
+
 	/* Add another image to collection after add 1st image on homepage */
 	public HomePage addThenRemoveAnotherImgToCollection() {
 		int imgNumber = img_itemList.size();

@@ -13,7 +13,7 @@ public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
 	@Test(enabled = true)
-	public void testOne() {
+	public void testScenarioOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
 		new HomePage().selectFirstImage().unlikeSelectedImageIfNeeded().likeSelectedImage()
@@ -22,7 +22,7 @@ public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
 	@Test(enabled = true)
-	public void testTwo() {
+	public void testScenarioTwo() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
 		new TopHearder().openPersonalMenu().goToProfilePage();
@@ -36,16 +36,18 @@ public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
 	@Test(enabled = true)
-	public void testThree() {
+	public void testScenarioThree() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
+		new HomePage().goToLikeTab();
+		new ProfilePage().unlikeAllLikedImg().goToHomePage();
 		new HomePage().selectAndLikeRandomImage().goToLikeTab();
 		new ProfilePage().verifyNumberLiked().verifyNumberLikedImage().unlikeAllLikedImg();
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
 	@Test(enabled = true)
-	public void testFour() {
+	public void testScenarioFour() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage(true).login();
 		new HomePage(true).createPrivateCollection().addThenRemoveAnotherImgToCollection().goToCollectionTab();

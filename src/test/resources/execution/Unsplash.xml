@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite thread-count="1" name="Suite" parallel="methods"
-	preserve-order="true" >
+<suite thread-count="1" name="Suite" parallel="methods">
 
 	<listeners>
 		<listener class-name="com.test.listener.TestListener"></listener>
@@ -11,9 +10,28 @@
 	<parameter name="configfile"
 		value="./common/config/Chrome-local-config.json" />
 
-	<test name="Test">
+	<test name="Test" preserve-order="true">
 		<classes>
-			<class name="test.unsplash.TestUnsplash" />
+			<class name="test.unsplash.TestUnsplash">
+				<methods>
+					<include name="testScenarioTwo"></include>
+				</methods>
+			</class>
+			<class name="test.unsplash.TestUnsplash">
+				<methods>
+					<include name="testScenarioOne"></include>
+				</methods>
+			</class>
+			<class name="test.unsplash.TestUnsplash">
+				<methods>
+					<include name="testScenarioThree"></include>
+				</methods>
+			</class>
+			<class name="test.unsplash.TestUnsplash">
+				<methods>
+					<include name="testScenarioFour"></include>
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

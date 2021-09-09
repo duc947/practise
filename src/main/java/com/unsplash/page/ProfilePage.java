@@ -56,6 +56,9 @@ public class ProfilePage extends TestPage {
 		@FindBy(xpath = "//figure/div/div/a/div/div[2]/div/img"),
 		})
 	private List<WebElement> img_collectionImage;
+
+	@FindBy(css = "a[title='Home — Unsplash']")
+	private WebElement btn_logo;
 	
 	public ProfilePage goToEditProfilePage() {
 		lnk_editProfile.click();
@@ -79,7 +82,8 @@ public class ProfilePage extends TestPage {
 
 	public ProfilePage verifyNumberLiked() {
 		String numberOfLike = lbl_likeNumber.getText();
-		Assert.assertTrue(numberOfLike.contains(getData("numberOfLikedImg")), "Number of Like is wrong: " + numberOfLike);
+		Assert.assertTrue(numberOfLike.contains(getData("numberOfLikedImg")),
+				"Number of Like is wrong: " + numberOfLike);
 		ExtentReport.log(Status.INFO, "Number of Like: " + numberOfLike);
 		return this;
 	}
@@ -184,6 +188,10 @@ public class ProfilePage extends TestPage {
 		ExtentReport.log(Status.INFO, "Number of photo in Collection: " + actual);
 		return this;
 	}
-	
-	
+
+	public ProfilePage goToHomePage() {
+		btn_logo.click();
+		ExtentReport.log(Status.INFO, "Go to Home Page");
+		return this;
+	}
 }
