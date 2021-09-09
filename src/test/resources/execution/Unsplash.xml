@@ -4,7 +4,6 @@
 
 	<listeners>
 		<listener class-name="com.test.listener.TestListener"></listener>
-
 	</listeners>
 
 	<parameter name="configfile"
@@ -15,25 +14,9 @@
 			<class name="test.unsplash.TestUnsplash">
 				<methods>
 					<include name="testScenarioTwo"></include>
-				</methods>
-			</class>
-			<class name="test.unsplash.TestUnsplash">
-				<methods>
 					<include name="testScenarioOne"></include>
-				</methods>
-			</class>
-			<class name="test.unsplash.TestUnsplash">
-				<methods>
 					<include name="testScenarioThree"></include>
-				</methods>
-			</class>
-			<class name="test.unsplash.TestUnsplash">
-				<methods>
 					<include name="testScenarioFour"></include>
-				</methods>
-			</class>
-			<class name="test.unsplash.TestUnsplash">
-				<methods>
 					<include name="testScenarioFive"></include>
 				</methods>
 			</class>

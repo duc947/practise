@@ -12,7 +12,7 @@ import com.unsplash.page.TopHearder;
 public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testScenarioOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -21,7 +21,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testScenarioTwo() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -35,7 +35,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testScenarioThree() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -46,7 +46,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void testScenarioFour() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage(true).login();
