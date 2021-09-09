@@ -32,6 +32,11 @@
 					<include name="testScenarioFour"></include>
 				</methods>
 			</class>
+			<class name="test.unsplash.TestUnsplash">
+				<methods>
+					<include name="testScenarioFive"></include>
+				</methods>
+			</class>
 		</classes>
 	</test>
 </suite>

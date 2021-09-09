@@ -1,10 +1,14 @@
 package com.test.page;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -66,6 +70,17 @@ public class TestPage {
 			timeCount--;
 			impliWait(1);
 		} while (!js.executeScript("return document.readyState").equals("complete") && timeCount > 0);
+		
 	}
-    
+
+	public List<String> getNetworkLog(String requestURL) {
+		List<LogEntry> entriesNetwork = driver.manage().logs().get(LogType.PERFORMANCE).getAll();
+		List<String> networkLog = new ArrayList<String>();
+		for (LogEntry entry : entriesNetwork) {
+			if (entry.getMessage().contains(requestURL)) {
+				networkLog.add(entry.getMessage());
+			}
+		}
+		return networkLog;
+	}
 }

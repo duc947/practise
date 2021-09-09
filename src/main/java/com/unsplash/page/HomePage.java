@@ -46,6 +46,9 @@ public class HomePage extends TestPage {
 	@FindBy(xpath = "//*[contains(text(),'Create collection')]")
 	private WebElement btn_submitCreateCollection;
 
+	@FindBy(css = "div[data-test='photos-route'] a[title='Download photo']")
+	private WebElement btn_downloadImage;
+
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_1 = "rgba(224, 76, 76, 1)";
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_2 = "rgba(241, 81, 81, 1)";
 	public static final String LIKE_BUTTON_BACKGROUND_COLOR_3 = "rgba(226, 86, 86, 1)";
@@ -82,6 +85,12 @@ public class HomePage extends TestPage {
 		waitElementToBeClickable(image);
 		image.click();
 		ExtentReport.log(Status.INFO, "Select an image");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return this;
 	}
 
@@ -124,10 +133,21 @@ public class HomePage extends TestPage {
 		return this;
 	}
 
+	public HomePage selectRandomImage() {
+		int imgNumber = img_itemList.size();
+		int quantity = 1;
+		ExtentReport.log(Status.INFO, "Select: " + quantity  + " random image from " + imgNumber);
+		Set<Integer> imgNumberPicked = getRandomNumberFromRange(0, imgNumber, quantity);
+		for (int element : imgNumberPicked) {
+			selectImage(img_itemList.get(element));
+		}
+		return this;
+	}
+
 	public HomePage selectAndLikeRandomImage() {
 		int imgNumber = img_itemList.size();
 		int quantity = Integer.valueOf(getData("numberOfLikedImg"));
-		ExtentReport.log(Status.INFO, "Select: " + quantity  + " image from " + imgNumber);
+		ExtentReport.log(Status.INFO, "Select: " + quantity  + " random image from " + imgNumber);
 		Set<Integer> imgNumberPicked = getRandomNumberFromRange(0, imgNumber, quantity);
 		for (int element : imgNumberPicked) {
 			selectImage(img_itemList.get(element));
@@ -211,5 +231,46 @@ public class HomePage extends TestPage {
 		openURL(URL);
 		ExtentReport.log(Status.INFO, "Go to Collection tab: " + getURL());
 		return this;
+	}
+
+	public HomePage downloadSelectedImage() {
+		btn_downloadImage.click();
+		ExtentReport.log(Status.INFO, "Click Download button");
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this;
+	}
+
+	public HomePage verifyDownloadSuccess() {
+		verifyNetworkLogContainValue("\"status\":200");
+		ExtentReport.log(Status.INFO, "Download Successful");
+		return this;
+	}
+
+	public HomePage verifyNetworkLogContainValue(String expectedValue) {
+		List<String> networkLog = getNetworkLog();
+		verifyNetworkLogContainValue(networkLog, expectedValue);
+		return this;
+	}
+
+	public List<String> getNetworkLog() {
+		List<String> networkLog = getNetworkLog(getData("requestURL"));
+		return networkLog;
+	}
+
+	public static void verifyNetworkLogContainValue(List<String> networkLog, String expectedValue) {
+		boolean check = false;
+		for (String network : networkLog) {
+			if (network.contains(expectedValue)) {
+				check = true;
+				break;
+			}
+		}
+		Assert.assertTrue(check, "Verify that network log contain correct value: [" + expectedValue
+				+ "]. If test fails, it can be caused by network log contain incorrect value");
 	}
 }

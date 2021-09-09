@@ -12,7 +12,7 @@ import com.unsplash.page.TopHearder;
 public class TestUnsplash {
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testScenarioOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -21,7 +21,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testScenarioTwo() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -35,7 +35,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testScenarioThree() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
@@ -46,7 +46,7 @@ public class TestUnsplash {
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void testScenarioFour() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage(true).login();
@@ -54,5 +54,13 @@ public class TestUnsplash {
 		new ProfilePage().openSpecificCollection().verifyNumberOfImg();
 		new TopHearder().openPersonalMenu().goToProfilePage();
 		new ProfilePage().goToCollectionTab().clearAllSpecificCollectionIfNeeded();
+	}
+
+	@InjectData(json = "./dataTest/unsplash/testOne.json")
+	@Test(enabled = true)
+	public void testScenarioFive() {
+		new HomePage().openPage().goToLoginPage();
+		new LoginPage(true).login();
+		new HomePage().selectRandomImage().downloadSelectedImage().verifyDownloadSuccess();
 	}
 }

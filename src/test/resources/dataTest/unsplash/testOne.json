@@ -9,5 +9,6 @@
 	"bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin finibus mi nec mi tempor aliquet. Sed elementum nibh egestas pharetra sodales. Pellentesque eu urna ac velit pharetra rutrum sed vitae nulla. In fermentum dignissim purus a efficitur.",
 	"numberOfLikedImg": "3",
 	"numberOfCollectionImg": "1",
-	"collectionName": "Test collection"
+	"collectionName": "Test collection",
+	"requestURL": "unsplash.jpg"
 }
