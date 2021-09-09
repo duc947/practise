@@ -10,5 +10,6 @@
 	"numberOfLikedImg": "3",
 	"numberOfCollectionImg": "1",
 	"collectionName": "Test collection",
-	"requestURL": "unsplash.jpg"
+	"requestDownload": "unsplash.jpg",
+	"requestDelete": "/remove?photo_id="
 }

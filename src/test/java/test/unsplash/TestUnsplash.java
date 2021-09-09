@@ -16,8 +16,8 @@ public class TestUnsplash {
 	public void testScenarioOne() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage().login();
-		new HomePage().selectFirstImage().unlikeSelectedImageIfNeeded().likeSelectedImage()
-				.verifySelectedImageIsLiked().unlikeSelectedImageIfNeeded();
+		new HomePage().selectFirstImage().unlikeSelectedImageIfNeeded().likeSelectedImage().verifySelectedImageIsLiked()
+				.unlikeSelectedImageIfNeeded();
 	}
 
 	@InjectData(json = "./dataTest/unsplash/testOne.json")
@@ -50,7 +50,8 @@ public class TestUnsplash {
 	public void testScenarioFour() {
 		new HomePage().openPage().goToLoginPage();
 		new LoginPage(true).login();
-		new HomePage(true).createPrivateCollection().addThenRemoveAnotherImgToCollection().goToCollectionTab();
+		new HomePage(true).createPrivateCollection().addThenRemoveAnotherImgToCollection().verifyDeleteSuccess()
+				.goToCollectionTab();
 		new ProfilePage().openSpecificCollection().verifyNumberOfImg();
 		new TopHearder().openPersonalMenu().goToProfilePage();
 		new ProfilePage().goToCollectionTab().clearAllSpecificCollectionIfNeeded();

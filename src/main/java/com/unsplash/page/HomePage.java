@@ -129,14 +129,14 @@ public class HomePage extends TestPage {
 						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_2)
 						|| btn_likeBackground.contains(LIKE_BUTTON_BACKGROUND_COLOR_3),
 				"Like button is not selected" + btn_likeBackground);
-		ExtentReport.log(Status.INFO, "Like button background is change:"  + btn_likeBackground);
+		ExtentReport.log(Status.INFO, "Like button background is change:" + btn_likeBackground);
 		return this;
 	}
 
 	public HomePage selectRandomImage() {
 		int imgNumber = img_itemList.size();
 		int quantity = 1;
-		ExtentReport.log(Status.INFO, "Select: " + quantity  + " random image from " + imgNumber);
+		ExtentReport.log(Status.INFO, "Select: " + quantity + " random image from " + imgNumber);
 		Set<Integer> imgNumberPicked = getRandomNumberFromRange(0, imgNumber, quantity);
 		for (int element : imgNumberPicked) {
 			selectImage(img_itemList.get(element));
@@ -147,7 +147,7 @@ public class HomePage extends TestPage {
 	public HomePage selectAndLikeRandomImage() {
 		int imgNumber = img_itemList.size();
 		int quantity = Integer.valueOf(getData("numberOfLikedImg"));
-		ExtentReport.log(Status.INFO, "Select: " + quantity  + " random image from " + imgNumber);
+		ExtentReport.log(Status.INFO, "Select: " + quantity + " random image from " + imgNumber);
 		Set<Integer> imgNumberPicked = getRandomNumberFromRange(0, imgNumber, quantity);
 		for (int element : imgNumberPicked) {
 			selectImage(img_itemList.get(element));
@@ -214,14 +214,21 @@ public class HomePage extends TestPage {
 		int imgNumber = img_itemList.size();
 		Set<Integer> imgNumberPicked = getRandomNumberFromRange(1, imgNumber, 1);
 		for (int element : imgNumberPicked) {
-			selectImage(img_itemList.get(element));
-			addToCollection();
-			addToSpecificCollection(getData("collectionName"));
-			btn_closeCollection.click();
-			addToCollection();
-			addToSpecificCollection(getData("collectionName"));
-			btn_closeCollection.click();
-			closeSelectedImage();
+			try {
+				selectImage(img_itemList.get(element));
+				addToCollection();
+				addToSpecificCollection(getData("collectionName"));
+				Thread.sleep(300);
+				btn_closeCollection.click();
+				addToCollection();
+				addToSpecificCollection(getData("collectionName"));
+				Thread.sleep(3000);
+				btn_closeCollection.click();
+				closeSelectedImage();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return this;
 	}
@@ -246,20 +253,15 @@ public class HomePage extends TestPage {
 	}
 
 	public HomePage verifyDownloadSuccess() {
-		verifyNetworkLogContainValue("\"status\":200");
+		verifyNetworkLogContainValue("\"status\":200", getData("requestDownload"));
 		ExtentReport.log(Status.INFO, "Download Successful");
 		return this;
 	}
 
-	public HomePage verifyNetworkLogContainValue(String expectedValue) {
-		List<String> networkLog = getNetworkLog();
+	public HomePage verifyNetworkLogContainValue(String expectedValue, String request) {
+		List<String> networkLog = getNetworkLog(request);
 		verifyNetworkLogContainValue(networkLog, expectedValue);
 		return this;
-	}
-
-	public List<String> getNetworkLog() {
-		List<String> networkLog = getNetworkLog(getData("requestURL"));
-		return networkLog;
 	}
 
 	public static void verifyNetworkLogContainValue(List<String> networkLog, String expectedValue) {
@@ -272,5 +274,11 @@ public class HomePage extends TestPage {
 		}
 		Assert.assertTrue(check, "Verify that network log contain correct value: [" + expectedValue
 				+ "]. If test fails, it can be caused by network log contain incorrect value");
+	}
+
+	public HomePage verifyDeleteSuccess() {
+		verifyNetworkLogContainValue("\"status\":200", getData("requestDelete"));
+		ExtentReport.log(Status.INFO, "Delete Successful");
+		return this;
 	}
 }
